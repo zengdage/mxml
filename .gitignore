@@ -12,6 +12,7 @@ libmxml.dylib
 libmxml.sl
 libmxml.sl.1
 libmxml.so
+libmxml.so.*
 libmxml.so.1
 libmxml.so.1.5
 mxml.epub
@@ -33,3 +34,7 @@ vcnet/Release
 vcnet/packages
 xcode/mxml.xcodeproj/project.xcworkspace
 xcode/mxml.xcodeproj/xcuserdata
+tags
+cscope.*
+doc/mxml.man
+temp1.xml

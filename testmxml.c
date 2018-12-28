@@ -51,9 +51,68 @@ const char	*whitespace_cb(mxml_node_t *node, int where);
 /*
  * 'main()' - Main entry for test program.
  */
+int main(int argc, char **args)
+{
+    FILE *fp;
+    mxml_node_t *tree,*node;
+
+    fp = fopen(args[1], "r");
+    tree = mxmlLoadFile(NULL, fp,MXML_TEXT_CALLBACK);
+    fclose(fp);
+
+    mxml_node_t *id,*password;
+
+    node = mxmlFindElement(tree, tree, "note",NULL, NULL,MXML_DESCEND);
+
+    printf(" year:%s \n",mxmlElementGetAttr(node,"year"));
+    printf(" date:%s \n",mxmlElementGetAttr(node,"date"));
+    printf(" month:%s \n",mxmlElementGetAttr(node,"month"));
+
+
+
+    id = mxmlFindElement(node, tree, "id",NULL, NULL,MXML_DESCEND);
+    printf("[%s}\n",id->child->value.text.string);
+
+    password = mxmlFindElement(node, tree, "password",NULL, NULL,MXML_DESCEND);
+
+    printf("[%s]\n",password->child->value.text.string);
+
+    mxml_node_t * ifirst_child = tree->child;
+    node = mxmlWalkNext(ifirst_child, tree, MXML_DESCEND);
+    while(node != NULL)
+    {
+        if(node->type == MXML_ELEMENT)
+        {
+            printf("%s:\n", node->value.element.name);
+            int i;
+            mxml_attr_t * attr;
+            for (i = node->value.element.num_attrs, attr = node->value.element.attrs; 
+                 i > 0; i --, attr ++)
+            {
+                printf("    %s=\"%s\"\n", attr->name, attr->value);
+            }
+            printf("node = 0x%08x, child = 0x%08x, next = 0x%08x\n", node, node->child, node->next); 
+        }
+        else if(node->type == MXML_TEXT)
+        {
+            printf("node = 0x%08x, child = 0x%08x, next = 0x%08x\n", node, node->child, node->next); 
+            if(strcmp(node->value.text.string, ""))
+            {
+                printf("[%s]\n", node->value.text.string);
+            }
+        }
+        node = mxmlWalkNext(node, tree, MXML_DESCEND);
+
+    }
+
+
+    mxmlDelete(tree);
+
+    return 0 ;
+}
 
 int					/* O - Exit status */
-main(int  argc,				/* I - Number of command-line args */
+testmxml_main(int  argc,				/* I - Number of command-line args */
      char *argv[])			/* I - Command-line args */
 {
   int			i;		/* Looping var */

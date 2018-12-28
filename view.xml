@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="gb2312" ?> 
+ <note year="55" date="33" month="22">
+  <id>5000</id> 
+  <password>FE-D0-18-00</password> 
+
+  <Button
+      left="10"
+      right="50"
+      top="10"
+      bottom="100"
+      jsurl="f:\\test.js">
+
+       
+      <Image
+           left="10"
+           right="50"
+      	   top="10"
+      	   bottom="100"
+      	   jsurl="f:\\test.js"
+      />
+   </Button>
+
+
+</note>
